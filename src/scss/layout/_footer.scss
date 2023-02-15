@@ -2,7 +2,7 @@
     background-color: $grisOscuro;
 
     .contenido-footer {
-        padding-top: $separacion / 2;
+        padding-top: calc($separacion / 2);
     }
 
     .copyright {
