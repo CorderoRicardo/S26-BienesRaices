@@ -106,7 +106,7 @@ include './includes/templates/header.php';
                             </li>
                         </ul>
 
-                        <a href="anuncio.html" class="boton boton-amarillo">
+                        <a href="anuncio.php" class="boton boton-amarillo">
                             Ver propiedad
                         </a>
                     </div>
@@ -165,7 +165,7 @@ include './includes/templates/header.php';
                             </li>
                         </ul>
 
-                        <a href="anuncio.html" class="boton boton-amarillo">
+                        <a href="anuncio.php" class="boton boton-amarillo">
                             Ver propiedad
                         </a>
                     </div>
@@ -224,7 +224,7 @@ include './includes/templates/header.php';
                             </li>
                         </ul>
 
-                        <a href="anuncio.html" class="boton boton-amarillo">
+                        <a href="anuncio.php" class="boton boton-amarillo">
                             Ver propiedad
                         </a>
                     </div>
@@ -232,7 +232,7 @@ include './includes/templates/header.php';
                 <!--Fin .anuncio-->
             </div>
             <div class="alinear-derecha">
-                <a href="anuncios.html" class="boton-verde">Ver todas</a>
+                <a href="anuncios.php" class="boton-verde">Ver todas</a>
             </div>
         </section>
 
@@ -242,7 +242,7 @@ include './includes/templates/header.php';
                 Llena el formulario de contacto y un asesor se pondrá en
                 contacto contigo a la brevedad
             </p>
-            <a href="contacto.html" class="boton-amarillo-inline">Contacto</a>
+            <a href="contacto.php" class="boton-amarillo-inline">Contacto</a>
         </section>
 
         <div class="seccion contenedor seccion-inferior">
@@ -267,7 +267,7 @@ include './includes/templates/header.php';
                         </picture>
                     </div>
                     <div class="texto-entrada">
-                        <a href="entrada.html">
+                        <a href="entrada.php">
                             <h4>Terraza en el techo de tu casa</h4>
                             <p class="informacion-meta">
                                 Escrito en <span>20/10/2022</span> por
@@ -301,7 +301,7 @@ include './includes/templates/header.php';
                         </picture>
                     </div>
                     <div class="texto-entrada">
-                        <a href="entrada.html">
+                        <a href="entrada.php">
                             <h4>Guía para la decoración de tu hogar</h4>
                             <p class="informacion-meta">
                                 Escrito en <span>20/10/2022</span> por
@@ -334,10 +334,10 @@ include './includes/templates/header.php';
         <footer class="footer seccion">
             <div class="contenedor contenedor-footer">
                 <nav class="navegacion">
-                    <a href="nosotros.html">Nosotros</a>
-                    <a href="anuncios.html">Anuncios</a>
-                    <a href="blog.html">Blog</a>
-                    <a href="contacto.html">Contacto</a>
+                    <a href="nosotros.php">Nosotros</a>
+                    <a href="anuncios.php">Anuncios</a>
+                    <a href="blog.php">Blog</a>
+                    <a href="contacto.php">Contacto</a>
                 </nav>
             </div>
             <p class="copyright">Todos los derechos reservados 2023 &copy;</p>

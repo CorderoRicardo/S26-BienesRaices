@@ -23,7 +23,7 @@ include './includes/templates/header.php';
                     </picture>
                 </div>
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>Terraza en el techo de tu casa</h4>
                         <p class="informacion-meta">
                             Escrito en <span>20/10/2022</span> por
@@ -57,7 +57,7 @@ include './includes/templates/header.php';
                     </picture>
                 </div>
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>Guía para la decoración de tu hogar</h4>
                         <p class="informacion-meta">
                             Escrito en <span>20/10/2022</span> por
@@ -91,7 +91,7 @@ include './includes/templates/header.php';
                     </picture>
                 </div>
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>Terraza en el techo de tu casa</h4>
                         <p class="informacion-meta">
                             Escrito en <span>20/10/2022</span> por
@@ -125,7 +125,7 @@ include './includes/templates/header.php';
                     </picture>
                 </div>
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>Guía para la decoración de tu hogar</h4>
                         <p class="informacion-meta">
                             Escrito en <span>20/10/2022</span> por
@@ -145,10 +145,10 @@ include './includes/templates/header.php';
         <footer class="footer seccion">
             <div class="contenedor contenedor-footer">
                 <nav class="navegacion">
-                    <a href="nosotros.html">Nosotros</a>
-                    <a href="anuncios.html">Anuncios</a>
-                    <a href="blog.html">Blog</a>
-                    <a href="contacto.html">Contacto</a>
+                    <a href="nosotros.php">Nosotros</a>
+                    <a href="anuncios.php">Anuncios</a>
+                    <a href="blog.php">Blog</a>
+                    <a href="contacto.php">Contacto</a>
                 </nav>
             </div>
             <p class="copyright">Todos los derechos reservados 2023 &copy;</p>
