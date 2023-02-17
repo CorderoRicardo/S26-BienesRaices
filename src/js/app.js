@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     eventListeners();
+
+    darkMode();
 });
 
 function eventListeners() {
@@ -9,12 +11,12 @@ function eventListeners() {
 
 function navegacionResponsive() {
     const navegacion = document.querySelector('.navegacion');
-
-    // if (navegacion.classList.contains('mostrar')) {
-    //     navegacion.classList.remove('mostrar');
-    // } else {
-    //     navegacion.classList.add('mostrar');
-    // }
-
     navegacion.classList.toggle('mostrar');
+}
+
+function darkMode() {
+    const botonDarkMode = document.querySelector('.dark-mode-boton');
+    botonDarkMode.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+    });
 }
