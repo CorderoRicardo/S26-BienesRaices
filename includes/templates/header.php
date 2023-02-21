@@ -13,21 +13,21 @@
                 <div class="barra">
                     <a href="/S26-BienesRaices/index.php">
                         <img
-                            src="build/img/logo.svg"
+                            src="/S26-BienesRaices/build/img/logo.svg"
                             alt="logotipo de Bienes Raices"
                         />
                     </a>
 
                     <div class="mobile-menu">
                         <img
-                            src="build/img/barras.svg"
+                            src="/S26-BienesRaices/build/img/barras.svg"
                             alt="Icono menu responsive"
                         />
                     </div>
 
                     <div class="derecha">
                         <img
-                            src="build/img/dark-mode.svg"
+                            src="/S26-BienesRaices/build/img/dark-mode.svg"
                             class="dark-mode-boton"
                         />
                         <nav class="navegacion">
