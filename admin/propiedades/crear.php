@@ -2,6 +2,8 @@
 require '../../includes/config/database.php';
 $db = conectarDB();
 
+$errores = [];
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $titulo = $_POST["titulo"];
     $precio = $_POST["precio"];
@@ -11,15 +13,46 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $estacionamiento = $_POST["estacionamiento"];
     $vendedorId = $_POST["vendedor"];
 
+    if(!$titulo){
+        $errores[] = 'El Titulo es obligatorio';
+    }
+
+    if(!$precio){
+        $errores[] = 'El Precio es obligatorio';
+    }    
+    if(strlen($descripcion) < 50){
+        $errores[] = 'La Descripción es obligatoria y debe tener al menos 50 caracteres';
+    }    
+    if(!$habitaciones){
+        $errores[] = 'El número de Habitaciones es obligatorio';
+    }
+    if(!$wc){
+        $errores[] = 'El número de Baños es obligatorio';
+    }
+    if(!$estacionamiento){
+        $errores[] = 'El número de lugares de Estacionamiento es obligatorio';
+    }
+    if(!$vendedorId){
+        $errores[] = 'Elige un vendedor';
+    }
+
+    // echo "<pre>";
+    // var_dump($errores);
+    // echo "</pre>";
+    
+    if(empty($errores)){
     // Crear la query del INSERT
-    $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedores_Id) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId');";
+        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedores_Id) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId');";
 
     // Insertar la query en la base de datos
-    $resultado = mysqli_query($db, $query);
+        $resultado = mysqli_query($db, $query);
 
-    if($resultado){
-        echo "Insertado correctamente";
+        if($resultado){
+            echo "Insertado correctamente";
+        }
+
     }
+
 }
 
 require '../../includes/funciones.php';
@@ -28,6 +61,13 @@ incluirTemplate('header');
 
     <main class="contenedor">
         <h1>Crear</h1>
+
+        <?php foreach($errores as $error): ?>
+            <div class="alerta error">
+                <?php echo $error?>
+            </div>
+        <?php endforeach;?>
+
         <a href="/S26-BienesRaices/admin/index.php" class="boton boton-verde">Volver</a>
 
         <form action="" class="formulario" method="POST" action="/S26-BienesRaices/admin/propiedades/crear.php">
