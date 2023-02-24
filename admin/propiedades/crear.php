@@ -67,19 +67,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     if(empty($errores)){
     /*subida de archivos*/
-        $carpetaImagenes = '../../imagenes';
+        $carpetaImagenes = '../../imagenes/';
         //Crear carpeta si no existe previamente
         if(!is_dir($carpetaImagenes)){
             mkdir($carpetaImagenes);
         }
 
+        // generar nombre único para la imagen
+        $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+
         //Subir la imagen
-        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . '/archivo.jpg');
-        exit;
+        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);
         
     // Crear la query del INSERT
-        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
-        ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId');";
+        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
+        ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId');";
 
     // Insertar la query en la base de datos
         $resultadoInsert = mysqli_query($db, $query);
