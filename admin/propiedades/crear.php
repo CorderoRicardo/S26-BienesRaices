@@ -17,6 +17,7 @@ $habitaciones = '';
 $wc = '';
 $estacionamiento = '';
 $vendedorId = '';
+$imagen = '';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $titulo = mysqli_real_escape_string($db, $_POST["titulo"]);
@@ -27,6 +28,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $estacionamiento = mysqli_real_escape_string($db, $_POST["estacionamiento"]);
     $vendedorId = mysqli_real_escape_string($db, $_POST["vendedor"]);
     $creado = date('Y/m/d');
+
+    $imagen = $_FILES['imagen'];
 
     if(!$titulo){
         $errores[] = 'El Titulo es obligatorio';
@@ -50,12 +53,30 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!$vendedorId){
         $errores[] = 'Elige un vendedor';
     }
-
+    if(!$imagen['name'] || $imagen['error']){
+        $errores[] = 'La imagen es obligatoria';
+    }
+    // Validar por tamaño - 1MB máx
+    $medida = 1000*1000;
+    if($imagen['size'] > $medida){
+        $errores[] = 'El Peso máximo de la imagen es 1MB';
+    }
     // echo "<pre>";
     // var_dump($errores);
     // echo "</pre>";
     
     if(empty($errores)){
+    /*subida de archivos*/
+        $carpetaImagenes = '../../imagenes';
+        //Crear carpeta si no existe previamente
+        if(!is_dir($carpetaImagenes)){
+            mkdir($carpetaImagenes);
+        }
+
+        //Subir la imagen
+        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . '/archivo.jpg');
+        exit;
+        
     // Crear la query del INSERT
         $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
         ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId');";
@@ -87,7 +108,7 @@ incluirTemplate('header');
 
         <a href="/S26-BienesRaices/admin/index.php" class="boton boton-verde">Volver</a>
 
-        <form action="" class="formulario" method="POST" action="/S26-BienesRaices/admin/propiedades/crear.php">
+        <form class="formulario" method="POST" action="/S26-BienesRaices/admin/propiedades/crear.php" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información general</legend>
 
@@ -110,7 +131,7 @@ incluirTemplate('header');
                 >
 
                 <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" accept="image/jpeg, image/png">
+                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
 
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion;?></textarea>
