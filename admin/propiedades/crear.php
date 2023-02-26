@@ -108,7 +108,7 @@ incluirTemplate('header');
             </div>
         <?php endforeach;?>
 
-        <a href="/S26-BienesRaices/admin/index.php" class="boton boton-verde">Volver</a>
+        <a href="/S26-BienesRaices/admin/index.php" class="boton boton-verde-inline">Volver</a>
 
         <form class="formulario" method="POST" action="/S26-BienesRaices/admin/propiedades/crear.php" enctype="multipart/form-data">
             <fieldset>
@@ -191,7 +191,7 @@ incluirTemplate('header');
                 </select>
             </fieldset>
 
-            <input type="submit" value="Crear propiedad" class="boton boton-verde">
+            <input type="submit" value="Crear propiedad" class="boton boton-verde-inline">
         </form>
     </main>
 

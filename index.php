@@ -232,7 +232,7 @@
                 <!--Fin .anuncio-->
             </div>
             <div class="alinear-derecha">
-                <a href="anuncios.php" class="boton-verde">Ver todas</a>
+                <a href="anuncios.php" class="boton-verde-inline">Ver todas</a>
             </div>
         </section>
 
