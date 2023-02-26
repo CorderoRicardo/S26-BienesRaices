@@ -88,7 +88,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         if($resultadoInsert){
             // 
-            header('Location: /S26-BienesRaices/admin/index.php');
+            header('Location: /S26-BienesRaices/admin/index.php?resultado=1');
         }
 
     }
