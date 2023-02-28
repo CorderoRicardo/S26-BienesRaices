@@ -40,3 +40,11 @@ table.propiedades {
         display: inline-block;
     }
 }
+.imagen-small {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    img {
+        width: 25rem;
+    }
+}
