@@ -10,6 +10,11 @@ if(!$id){
 require '../../includes/config/database.php';
 $db = conectarDB();
 
+//Consultar propiedad
+$consulta = "SELECT * FROM propiedades WHERE id = $id";
+$resultado = mysqli_query($db, $consulta);
+$propiedad = mysqli_fetch_assoc($resultado);
+
 //consultar valores de la BD: datos de vendedores
 $consulta = "SELECT * FROM vendedores;";
 $resultado = mysqli_query($db, $consulta);
@@ -18,14 +23,14 @@ $resultado = mysqli_query($db, $consulta);
 $errores = [];
 
 //persistencia de variaables
-$titulo = '';
-$precio = '';
-$descripcion = '';
-$habitaciones = '';
-$wc = '';
-$estacionamiento = '';
-$vendedorId = '';
-$imagen = '';
+$titulo = $propiedad['titulo'];
+$precio = $propiedad['precio'];
+$descripcion = $propiedad['descripcion'];
+$habitaciones = $propiedad['habitaciones'];
+$wc = $propiedad['wc'];
+$estacionamiento = $propiedad['estacionamiento'];
+$vendedorId = $propiedad['vendedores_id'];
+$imagenPropiedad = $propiedad['imagen'];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $titulo = mysqli_real_escape_string($db, $_POST["titulo"]);
@@ -142,7 +147,9 @@ incluirTemplate('header');
 
                 <label for="imagen">Imagen:</label>
                 <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
-
+                <div class="imagen-small">
+                    <img src="/S26-BienesRaices/imagenes/<?php echo $imagenPropiedad; ?>">
+                </div>
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion;?></textarea>
             </fieldset>
