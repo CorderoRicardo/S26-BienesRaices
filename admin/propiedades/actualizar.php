@@ -66,9 +66,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!$vendedorId){
         $errores[] = 'Elige un vendedor';
     }
-    if(!$imagen['name'] || $imagen['error']){
-        $errores[] = 'La imagen es obligatoria';
-    }
+
     // Validar por tamaño - 1MB máx
     $medida = 1000*1000;
     if($imagen['size'] > $medida){
@@ -80,28 +78,28 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     if(empty($errores)){
     /*subida de archivos*/
-        $carpetaImagenes = '../../imagenes/';
-        //Crear carpeta si no existe previamente
-        if(!is_dir($carpetaImagenes)){
-            mkdir($carpetaImagenes);
-        }
+        // $carpetaImagenes = '../../imagenes/';
+        // //Crear carpeta si no existe previamente
+        // if(!is_dir($carpetaImagenes)){
+        //     mkdir($carpetaImagenes);
+        // }
 
-        // generar nombre único para la imagen
-        $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+        // // generar nombre único para la imagen
+        // $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
 
-        //Subir la imagen
-        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);
+        // //Subir la imagen
+        // move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);
         
     // Crear la query del INSERT
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
-        ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId');";
+        $query = "UPDATE propiedades SET titulo = '$titulo', precio = $precio, descripcion = '$descripcion', habitaciones = $habitaciones,
+        wc = $wc, estacionamiento = $estacionamiento, vendedores_id = $vendedorId WHERE id = $id";
 
     // Insertar la query en la base de datos
         $resultadoInsert = mysqli_query($db, $query);
 
         if($resultadoInsert){
             // 
-            header('Location: /S26-BienesRaices/admin/index.php?resultado=1');
+            header('Location: /S26-BienesRaices/admin/index.php?resultado=2');
         }
 
     }
@@ -123,7 +121,7 @@ incluirTemplate('header');
 
         <a href="/S26-BienesRaices/admin/index.php" class="boton boton-verde-inline">Volver</a>
 
-        <form class="formulario" method="POST" action="/S26-BienesRaices/admin/propiedades/crear.php" enctype="multipart/form-data">
+        <form class="formulario" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información general</legend>
 

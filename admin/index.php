@@ -23,6 +23,10 @@
                 <p class="alerta exito">
                     Anuncio creado correctamente
                 </p>
+            <?php elseif(intval($resultado)=== 2): ?>
+                <p class="alerta exito">
+                    Anuncio actualizado correctamente
+                </p>                
             <?php endif; ?>
             <a href="/S26-BienesRaices/admin/propiedades/crear.php" class="boton boton-verde-inline">Nueva propiedad</a>
                 <table class="propiedades">
