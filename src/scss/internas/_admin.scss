@@ -27,6 +27,12 @@ table.propiedades {
             padding: 2rem;
         }
     }
+
+    tbody {
+        tr {
+            text-align: center;
+        }
+    }
     .imagen-tabla {
         width: 10rem;
     }
