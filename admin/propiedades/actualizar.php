@@ -78,21 +78,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     if(empty($errores)){
     /*subida de archivos*/
-        // $carpetaImagenes = '../../imagenes/';
-        // //Crear carpeta si no existe previamente
-        // if(!is_dir($carpetaImagenes)){
-        //     mkdir($carpetaImagenes);
-        // }
+        $carpetaImagenes = '../../imagenes/';
+        //Crear carpeta si no existe previamente
+        if(!is_dir($carpetaImagenes)){
+            mkdir($carpetaImagenes);
+        }
 
-        // // generar nombre único para la imagen
-        // $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+        $nombreImagen = '';
 
-        // //Subir la imagen
-        // move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);
+        // Eliminar imagen previa
+        if($imagen['name']){
+            unlink($carpetaImagenes . $propiedad['imagen']);
+
+            // generar nombre único para la imagen
+            $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+
+            //Subir la imagen
+            move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);            
+        } else{
+            $nombreImagen = $propiedad['imagen'];
+        }
         
     // Crear la query del INSERT
-        $query = "UPDATE propiedades SET titulo = '$titulo', precio = $precio, descripcion = '$descripcion', habitaciones = $habitaciones,
-        wc = $wc, estacionamiento = $estacionamiento, vendedores_id = $vendedorId WHERE id = $id";
+        $query = "UPDATE propiedades SET titulo = '$titulo', precio = $precio, imagen = '$nombreImagen', descripcion = '$descripcion', habitaciones = $habitaciones, wc = $wc, estacionamiento = $estacionamiento, vendedores_id = $vendedorId WHERE id = $id";
 
     // Insertar la query en la base de datos
         $resultadoInsert = mysqli_query($db, $query);
