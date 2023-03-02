@@ -23,6 +23,30 @@
             $errores[] = 'El password es obligatorio';
         }
 
+        //validaciones backend
+        if(empty($errores)){
+            //revisar si el usuario existe
+            $query = "SELECT * FROM usuarios WHERE email = '$email'";
+
+            $resultado = mysqli_query($db,$query);
+
+            if($resultado->num_rows){
+                $usuario = mysqli_fetch_assoc($resultado);
+
+                //verificar que el password es correcto
+                $auth = password_verify($password,$usuario['password']);
+                if($auth){
+                    //autenticar al usuario 
+
+
+                }else{
+                    $errores[] = "Password incorrecto";
+                }
+            }else{
+                $errores[] = 'El usuario no existe';
+            }
+        }
+
     }
 
     //header
