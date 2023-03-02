@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# File to create an user in the DB
+usuario.php
