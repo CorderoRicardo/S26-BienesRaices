@@ -37,7 +37,10 @@
                 $auth = password_verify($password,$usuario['password']);
                 if($auth){
                     //autenticar al usuario 
+                    session_start();
 
+                    $_SESSION['usuario'] = $usuario['email'];
+                    $_SESSION['login'] = true;
 
                 }else{
                     $errores[] = "Password incorrecto";
