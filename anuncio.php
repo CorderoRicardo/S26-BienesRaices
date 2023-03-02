@@ -1,11 +1,36 @@
 <?php
+    //Obtener y validar el ID
+    $id = $_GET['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+
+    if(!$id){
+        header('location: index.php');
+    }
+
+    //importar la conexion a la base datos
+    require 'includes/config/database.php';
+    $db = conectarDB();
+
+    //Escribir la consulta
+    $query = "SELECT * FROM propiedades WHERE id = $id";
+
+    //Obtener resultados
+    $resultado = mysqli_query($db, $query);
+
+    //validar que el ID existe
+    if(!$resultado->num_rows){
+        header('location: index.php');
+    }
+
+    $propiedad = mysqli_fetch_assoc($resultado);
+
     require 'includes/funciones.php';
     incluirTemplate('header');
 ?>
 
         <main class="contenedor seccion contenido-centrado">
-            <h1>Casa en Venta frente al bosque</h1>
-            <picture>
+            <h1><?php echo $propiedad['titulo']; ?></h1>
+            <!-- <picture>
                 <source srcset="build/img/destacada.webp" type="image/webp" />
                 <source srcset="build/img/destacada.jpg" type="image/jpeg" />
                 <img
@@ -13,9 +38,14 @@
                     src="build/img/destacada.jpg"
                     alt="Imagen anuncio"
                 />
-            </picture>
+            </picture> -->
+                <img
+                    loading="lazy"
+                    src="imagenes/<?php echo $propiedad['imagen']; ?>"
+                    alt="Imagen anuncio"
+                />
             <div class="resumen-propiedad">
-                <p class="precio">$3,000,000.00</p>
+                <p class="precio">$<?php echo $propiedad['precio']; ?></p>
                 <ul class="iconos-caracteristicas">
                     <li>
                         <img
@@ -24,7 +54,7 @@
                             src="build/img/icono_wc.svg"
                             alt="icono wc"
                         />
-                        <p>3</p>
+                        <p><?php echo $propiedad['wc']; ?></p>
                     </li>
                     <li>
                         <img
@@ -33,7 +63,7 @@
                             src="build/img/icono_dormitorio.svg"
                             alt="icono dormitorio"
                         />
-                        <p>3</p>
+                        <p><?php echo $propiedad['habitaciones']; ?></p>
                     </li>
                     <li>
                         <img
@@ -42,36 +72,17 @@
                             src="build/img/icono_estacionamiento.svg"
                             alt="icono estacionamiento"
                         />
-                        <p>3</p>
+                        <p><?php echo $propiedad['estacionamiento']; ?></p>
                     </li>
                 </ul>
                 <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Expedita repellat omnis veritatis nostrum nihil, fuga maxime
-                    itaque eos repudiandae quas sunt ipsam debitis fugit
-                    accusantium ullam sequi perferendis suscipit quis! Lorem
-                    ipsum dolor sit amet consectetur adipisicing elit. Ullam
-                    modi voluptas error temporibus nemo neque voluptatum autem,
-                    odio necessitatibus! Quod, velit laborum? Saepe similique
-                    magni pariatur rerum unde quod earum. Lorem ipsum dolor sit,
-                    amet consectetur adipisicing elit. Velit id facilis eum est
-                    ducimus autem quibusdam accusantium iure modi! Consequatur
-                    hic magnam cumque corporis iste enim illum adipisci eum
-                    debitis!
+                    <?php echo $propiedad['descripcion']; ?>
                 </p>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Doloribus est reprehenderit quo cumque ipsum tenetur
-                    voluptas mollitia culpa aliquid obcaecati ab consequatur
-                    deserunt ex itaque architecto, minima aliquam! Enim, qui.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                    molestias quis earum doloremque ipsum architecto quisquam,
-                    rerum nulla rem, quos, vel nostrum ex. Illum, sed earum
-                    molestias veniam amet tenetur.
-                </p>
+
             </div>
         </main>
 
 <?php
     incluirTemplate('footer');
+    mysqli_close($db);
 ?>
