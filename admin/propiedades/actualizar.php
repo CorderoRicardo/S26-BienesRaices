@@ -1,4 +1,11 @@
 <?php
+require '../../includes/funciones.php';
+$auth = autenticacion();
+
+if(!$auth){
+    header('location: /S26-BienesRaices/index.php');
+}
+
 //Validad la URL por ID
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -114,7 +121,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 

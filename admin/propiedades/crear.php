@@ -1,4 +1,11 @@
 <?php
+require '../../includes/funciones.php';
+$auth = autenticacion();
+
+if(!$auth){
+    header('location: /S26-BienesRaices/index.php');
+}
+
 require '../../includes/config/database.php';
 $db = conectarDB();
 
@@ -95,7 +102,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 

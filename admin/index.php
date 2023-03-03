@@ -1,4 +1,11 @@
 <?php
+    require '../includes/funciones.php';
+    $auth = autenticacion();
+
+    if(!$auth){
+        header('location: /S26-BienesRaices/index.php');
+    }
+
     //Importar la conexión de la BD
     require '../includes/config/database.php';
     $db = conectarDB();
@@ -10,7 +17,6 @@
     $res = mysqli_query($db, $query);
 
     //Incluye un template
-    require '../includes/funciones.php';
     incluirTemplate('header');
 
     //Muestra un mensaje condicional
