@@ -38,10 +38,10 @@
                             class="dark-mode-boton"
                         />
                         <nav class="navegacion">
-                            <a href="nosotros.php">Nosotros</a>
-                            <a href="anuncios.php">Anuncios</a>
-                            <a href="blog.php">Blog</a>
-                            <a href="contacto.php">Contacto</a>
+                            <a href="/S26-BienesRaices/nosotros.php">Nosotros</a>
+                            <a href="/S26-BienesRaices/anuncios.php">Anuncios</a>
+                            <a href="/S26-BienesRaices/blog.php">Blog</a>
+                            <a href="/S26-BienesRaices/contacto.php">Contacto</a>
                             <?php if($auth): ?>
                                 <a href="/S26-BienesRaices/cerrar-sesion.php">Cerrar sesión</a>    
                             <?php endif; ?>
