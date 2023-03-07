@@ -38,7 +38,7 @@ $resultado = mysqli_query($db,$query);
                 <p>
                     <?php echo $propiedad['descripcion']; ?>
                 </p>
-                <p class="precio">$<?php echo $propiedad['precio']; ?></p>
+                <p class="precio">$<?php echo number_format($propiedad['precio']); ?></p>
                 <ul class="iconos-caracteristicas">
                     <li>
                         <img
