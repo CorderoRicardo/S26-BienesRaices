@@ -105,3 +105,4 @@ dist
 
 # File to create an user in the DB
 usuario.php
+/vendor/
