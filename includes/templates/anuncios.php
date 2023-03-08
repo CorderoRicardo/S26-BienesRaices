@@ -1,6 +1,4 @@
 <?php 
-//importar la conexion a la BD
-require __DIR__ . '/../config/database.php';
 $db = conectarDB();
 
 //consultar

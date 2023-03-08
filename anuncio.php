@@ -7,8 +7,8 @@
         header('location: index.php');
     }
 
-    //importar la conexion a la base datos
-    require 'includes/config/database.php';
+    //importar la conexion a la base datos ya no hace falta porque va incluida dentro de app.php
+    require 'includes/app.php';
     $db = conectarDB();
 
     //Escribir la consulta
@@ -24,7 +24,6 @@
 
     $propiedad = mysqli_fetch_assoc($resultado);
 
-    require 'includes/funciones.php';
     incluirTemplate('header');
 ?>
 
