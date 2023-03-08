@@ -6,12 +6,23 @@ function incluirTemplate( string $nombre, bool $inicio = false ){
     include TEMPLATES_URL . "/$nombre.php";
 }
 
-function autenticacion(): bool{
+/**
+ * Validates login credentials to access the CRUD pages
+ */
+function autenticacion(){
     session_start();
 
-    $auth = $_SESSION['login'];
-    if($auth){
-        return true;
+    if(!$_SESSION['login']){
+        header('location: /S26-BienesRaices/index.php');
     }
-    return false;
+}
+
+/**
+ * Prints the content of an object and stops the loading after it
+ */
+function debugging($variable){
+    echo '<pre>';
+    var_dump($variable);
+    echo '</pre>';
+    exit;
 }
