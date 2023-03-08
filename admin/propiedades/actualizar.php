@@ -1,5 +1,5 @@
 <?php
-require '../../includes/funciones.php';
+require '../../includes/app.php';
 $auth = autenticacion();
 
 if(!$auth){
@@ -14,7 +14,6 @@ if(!$id){
     header('Location: ../index.php');
 }
 
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 //Consultar propiedad

@@ -1,13 +1,12 @@
 <?php
-    require '../includes/funciones.php';
+    require '../includes/app.php';
     $auth = autenticacion();
 
     if(!$auth){
         header('location: /S26-BienesRaices/index.php');
     }
 
-    //Importar la conexión de la BD
-    require '../includes/config/database.php';
+    //Importar la conexión de la BD, ya no es necesario porque va dentro de app.php
     $db = conectarDB();
 
     //Escribir el query

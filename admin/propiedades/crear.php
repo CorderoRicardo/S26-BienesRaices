@@ -1,12 +1,11 @@
 <?php
-require '../../includes/funciones.php';
+require '../../includes/app.php';
 $auth = autenticacion();
 
 if(!$auth){
     header('location: /S26-BienesRaices/index.php');
 }
 
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 //consultar valores de la BD: datos de vendedores
