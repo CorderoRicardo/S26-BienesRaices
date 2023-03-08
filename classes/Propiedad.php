@@ -5,6 +5,7 @@ namespace App;
 class Propiedad{
     //Conexion a la base de datos
     protected static $db;
+    protected static $columnasDB = ['id','titulo','precio','imagen','descripcion','habitaciones','wc','estacionamiento','creado','vendedorId'];
 
     public $id;
     public $titulo;
@@ -32,6 +33,9 @@ class Propiedad{
     }
 
     public function guardar(){
+    //
+    $atributos = $this->sanitizarAtributos();
+
     // Crear la query del INSERT
         $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
         ('$this->titulo', '$this->precio', '$this->imagen', '$this->descripcion', '$this->habitaciones', '$this->wc', '$this->estacionamiento', '$this->creado', '$this->vendedorId');";
@@ -47,4 +51,27 @@ class Propiedad{
         self::$db = $database;
     }
 
+    /**
+     * Identify and join the attributes from the DB on an array
+     */
+    public function atributos(){
+        $atributos = [];
+        foreach(self::$columnasDB as $columna){
+            if($columna === 'id') continue;
+            $atributos[$columna] = $this->$columna;
+        }
+        return $atributos;
+    }
+
+    /**
+     * Apply escape string method to the input data
+     */
+    public function sanitizarAtributos(){
+        $atributos = $this->atributos();
+        $sanitizado = [];
+        foreach($atributos as $key => $value){
+            $sanitizado[$key] = self::$db->escape_string($value); 
+        }
+        return $sanitizado;
+    }
 }
