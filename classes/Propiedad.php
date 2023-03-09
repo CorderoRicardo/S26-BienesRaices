@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+
 class Propiedad{
     //Conexion a la base de datos
     protected static $db;
@@ -37,10 +39,16 @@ class Propiedad{
     $atributos = $this->sanitizarAtributos();
 
     // Crear la query del INSERT
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
-        ('$this->titulo', '$this->precio', '$this->imagen', '$this->descripcion', '$this->habitaciones', '$this->wc', '$this->estacionamiento', '$this->creado', '$this->vendedorId');";
+    $query = "INSERT INTO propiedades ( ";
+    $query .= join(', ',array_keys($atributos));
+    $query .= " ) VALUES (' ";
+    $query .= join("', '", array_values($atributos));
+    $query .= "') ";
+    // debugging($query);
+    
+    $resultado = self::$db->query($query);
 
-        $resultado = self::$db->query($query);
+    // debugging($resultado);
 
     }
 
