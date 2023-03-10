@@ -1,10 +1,6 @@
 <?php
 require '../../includes/app.php';
-$auth = autenticacion();
-
-if(!$auth){
-    header('location: /S26-BienesRaices/index.php');
-}
+autenticacion();
 
 //Validad la URL por ID
 $id = $_GET['id'];
