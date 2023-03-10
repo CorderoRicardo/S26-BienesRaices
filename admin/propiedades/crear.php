@@ -1,10 +1,10 @@
 <?php
 require '../../includes/app.php';
-$auth = autenticacion();
 
-if(!$auth){
-    header('location: /S26-BienesRaices/index.php');
-}
+use App\Propiedad;
+use Intervention\Image\ImageManagerStatic as Image;
+
+autenticacion();
 
 $db = conectarDB();
 
@@ -13,9 +13,9 @@ $consulta = "SELECT * FROM vendedores;";
 $resultado = mysqli_query($db, $consulta);
 
 // arreglo con errores para el formulario
-$errores = [];
+$errores = Propiedad::getErrores();
 
-//persistencia de variaables
+//persistencia de variables
 $titulo = '';
 $precio = '';
 $descripcion = '';
@@ -26,79 +26,47 @@ $vendedorId = '';
 $imagen = '';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $titulo = mysqli_real_escape_string($db, $_POST["titulo"]);
-    $precio = mysqli_real_escape_string($db, $_POST["precio"]);
-    $descripcion = mysqli_real_escape_string($db, $_POST["descripcion"]);
-    $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
-    $wc = mysqli_real_escape_string($db, $_POST["wc"]);
-    $estacionamiento = mysqli_real_escape_string($db, $_POST["estacionamiento"]);
-    $vendedorId = mysqli_real_escape_string($db, $_POST["vendedor"]);
-    $creado = date('Y/m/d');
+    $propiedad = new Propiedad($_POST);
+    
+    $titulo = $propiedad->titulo;
+    $precio = $propiedad->precio;
+    $descripcion = $propiedad->descripcion;
+    $habitaciones = $propiedad->habitaciones;
+    $wc = $propiedad->wc;
+    $estacionamiento = $propiedad->estacionamiento;
+    $vendedorId = $propiedad->vendedorId;
+    $imagen = $propiedad->imagen;
+    
+    /*subida de archivos*/
+    // generar nombre único para la imagen
+    $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
 
-    $imagen = $_FILES['imagen'];
-
-    if(!$titulo){
-        $errores[] = 'El Titulo es obligatorio';
+    // Agregar la imagen
+    // Realiza un resize a la imagen
+    if($_FILES['imagen']['tmp_name']){
+        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800,600);
+        $propiedad->setImage($nombreImagen);
     }
 
-    if(!$precio){
-        $errores[] = 'El Precio es obligatorio';
-    }    
-    if(strlen($descripcion) < 50){
-        $errores[] = 'La Descripción es obligatoria y debe tener al menos 50 caracteres';
-    }    
-    if(!$habitaciones){
-        $errores[] = 'El número de Habitaciones es obligatorio';
-    }
-    if(!$wc){
-        $errores[] = 'El número de Baños es obligatorio';
-    }
-    if(!$estacionamiento){
-        $errores[] = 'El número de lugares de Estacionamiento es obligatorio';
-    }
-    if(!$vendedorId){
-        $errores[] = 'Elige un vendedor';
-    }
-    if(!$imagen['name'] || $imagen['error']){
-        $errores[] = 'La imagen es obligatoria';
-    }
-    // Validar por tamaño - 1MB máx
-    $medida = 1000*1000;
-    if($imagen['size'] > $medida){
-        $errores[] = 'El Peso máximo de la imagen es 1MB';
-    }
-    // echo "<pre>";
-    // var_dump($errores);
-    // echo "</pre>";
+    // Validar -error por aqui 
+    $errores = $propiedad->validar();
     
     if(empty($errores)){
-    /*subida de archivos*/
-        $carpetaImagenes = '../../imagenes/';
-        //Crear carpeta si no existe previamente
-        if(!is_dir($carpetaImagenes)){
-            mkdir($carpetaImagenes);
-        }
+        //Crear la carpeta para subir imagenes
+        if(!is_dir(!is_dir(CARPETA_IMAGENES))){
+            mkdir(CARPETA_IMAGENES);
+        }        
 
-        // generar nombre único para la imagen
-        $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+        //Guarda la imagen en el servidor
+        $image->save(CARPETA_IMAGENES . $nombreImagen);
 
-        //Subir la imagen
-        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);
-        
-    // Crear la query del INSERT
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_Id) VALUES 
-        ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId');";
-
-    // Insertar la query en la base de datos
-        $resultadoInsert = mysqli_query($db, $query);
-
+        //Guarda en la BD
+        $resultadoInsert = $propiedad->guardar();
         if($resultadoInsert){
             // 
             header('Location: /S26-BienesRaices/admin/index.php?resultado=1');
         }
-
-    }
-
+    }  
 }
 
 incluirTemplate('header');
@@ -183,7 +151,7 @@ incluirTemplate('header');
 
             <fieldset>
                 <legend>Vendedor</legend>
-                <select name="vendedor">
+                <select name="vendedorId">
                     <option value="">-- Seleccione --</option>
                     <?php while($vendedor = mysqli_fetch_assoc($resultado)): ?>
                         <option 
