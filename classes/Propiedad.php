@@ -26,7 +26,7 @@ class Propiedad{
         $this->id = $args['id'] ?? '';
         $this->titulo = $args['titulo'] ?? '';
         $this->precio = $args['precio'] ?? '';
-        $this->imagen = $args['imagen'] ?? 'imagen.jpg';
+        $this->imagen = $args['imagen'] ?? '';
         $this->descripcion = $args['descripcion'] ?? '';
         $this->habitaciones = $args['habitaciones'] ?? '';
         $this->wc = $args['wc'] ?? '';
@@ -36,21 +36,19 @@ class Propiedad{
     }
 
     public function guardar(){
-    //
-    $atributos = $this->sanitizarAtributos();
+        $atributos = $this->sanitizarAtributos();
 
-    // Crear la query del INSERT
-    $query = "INSERT INTO propiedades ( ";
-    $query .= join(', ',array_keys($atributos));
-    $query .= " ) VALUES (' ";
-    $query .= join("', '", array_values($atributos));
-    $query .= "') ";
-    // debugging($query);
-    
-    $resultado = self::$db->query($query);
+        // Crear la query del INSERT
+        $query = "INSERT INTO propiedades ( ";
+        $query .= join(', ',array_keys($atributos));
+        $query .= " ) VALUES (' ";
+        $query .= join("', '", array_values($atributos));
+        $query .= "') ";
+        // debugging($query);
+        
+        $resultado = self::$db->query($query);
 
-    // debugging($resultado);
-
+        return $resultado;
     }
 
     /**
@@ -84,6 +82,12 @@ class Propiedad{
         return $sanitizado;
     }
 
+    public function setImage($imagen){
+        if($imagen){
+            $this->imagen = $imagen;
+        }
+    }
+
     public static function getErrores(){
         return self::$errores;
     }
@@ -92,36 +96,31 @@ class Propiedad{
      * Fill the 'errores' array with messages to display in the UI
      */
     public function validar(){
-    if(!$this->titulo){
-        self::$errores[] = 'El Titulo es obligatorio';
-    }
-
-    if(!$this->precio){
-        self::$errores[] = 'El Precio es obligatorio';
-    }    
-    if(strlen($this->descripcion) < 50){
-        self::$errores[] = 'La Descripción es obligatoria y debe tener al menos 50 caracteres';
-    }    
-    if(!$this->habitaciones){
-        self::$errores[] = 'El número de Habitaciones es obligatorio';
-    }
-    if(!$this->wc){
-        self::$errores[] = 'El número de Baños es obligatorio';
-    }
-    if(!$this->estacionamiento){
-        self::$errores[] = 'El número de lugares de Estacionamiento es obligatorio';
-    }
-    if(!$this->vendedorId){
-        self::$errores[] = 'Elige un vendedor';
-    }
-    // if(!$this->imagen['name'] || $this->imagen['error']){
-    //     self::$errores[] = 'La imagen es obligatoria';
-    // }
-    // // Validar por tamaño - 1MB máx
-    // $medida = 1000*1000;
-    // if($this->imagen['size'] > $medida){
-    //     self::$errores[] = 'El Peso máximo de la imagen es 1MB';
-    // }
-    return self::$errores;
+        if(!$this->titulo){
+            self::$errores[] = 'El Titulo es obligatorio';
+        }
+        if(!$this->precio){
+            self::$errores[] = 'El Precio es obligatorio';
+        }    
+        echo "2";
+        if(strlen($this->descripcion) < 50){
+            self::$errores[] = 'La Descripción es obligatoria y debe tener al menos 50 caracteres';
+        }    
+        if(!$this->habitaciones){
+            self::$errores[] = 'El número de Habitaciones es obligatorio';
+        }
+        if(!$this->wc){
+            self::$errores[] = 'El número de Baños es obligatorio';
+        }
+        if(!$this->estacionamiento){
+            self::$errores[] = 'El número de lugares de Estacionamiento es obligatorio';
+        }
+        if(!$this->vendedorId){
+            self::$errores[] = 'Elige un vendedor';
+        }
+        if(!$this->imagen){
+            self::$errores[] = 'La imagen es obligatoria';
+        }
+        return self::getErrores();
     }
 }
