@@ -7,9 +7,7 @@ function incluirTemplate( string $nombre, bool $inicio = false ){
     include TEMPLATES_URL . "/$nombre.php";
 }
 
-/**
- * Validates login credentials to access the CRUD pages
- */
+/** Validates login credentials to access the CRUD pages */
 function autenticacion(){
     session_start();
 
@@ -18,12 +16,16 @@ function autenticacion(){
     }
 }
 
-/**
- * Prints the content of an object and stops the loading after it
- */
+/**Prints the content of an object and stops the loading after it */
 function debugging($variable){
     echo '<pre>';
     var_dump($variable);
     echo '</pre>';
     exit;
+}
+
+/**Escapes the HTML code to add a bit more of security */
+function cleanHTML($html): string{
+    $s = htmlspecialchars($html);
+    return $s;
 }
