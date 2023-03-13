@@ -102,7 +102,6 @@ class Propiedad{
         if(!$this->precio){
             self::$errores[] = 'El Precio es obligatorio';
         }    
-        echo "2";
         if(strlen($this->descripcion) < 50){
             self::$errores[] = 'La Descripción es obligatoria y debe tener al menos 50 caracteres';
         }    
@@ -124,10 +123,18 @@ class Propiedad{
         return self::getErrores();
     }
 
+    /** Returns all rows of the table 'propiedades' */
     public static function all(){
         $query = "SELECT * FROM propiedades";
         $resultado = self::consultarSQL($query);
         return $resultado;
+    }
+
+    /** Search a row in 'propiedades' table by the ID and returns it */
+    public static function find($id){
+        $query = "SELECT * FROM propiedades WHERE id = $id";
+        $resultado = self::consultarSQL($query);
+        return array_shift($resultado);
     }
 
     public static function consultarSQL($query){
