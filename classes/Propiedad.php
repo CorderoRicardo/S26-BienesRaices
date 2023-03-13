@@ -163,4 +163,13 @@ class Propiedad{
         }
         return $objeto;
     }
+
+    /** Sincronize the object in memory with changes made by the user */
+    public function sincronizar($args = []){
+        foreach($args as $key => $value){
+            if(property_exists($this,$key) && !is_null($value)){
+                $this->$key = $value;
+            }
+        }
+    }
 }
