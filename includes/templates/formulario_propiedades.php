@@ -23,6 +23,11 @@
                 <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
 
                 <label for="descripcion">Descripción:</label>
+                <?php if($propiedad->imagen): ?>
+                    <div class="imagen-small">
+                        <img src="/S26-BienesRaices/imagenes/<?php echo $propiedad->imagen; ?>">
+                    </div>
+                <?php endif; ?>
                 <textarea id="descripcion" name="descripcion"><?php echo cleanHTML($propiedad->descripcion);?></textarea>
             </fieldset>
 
