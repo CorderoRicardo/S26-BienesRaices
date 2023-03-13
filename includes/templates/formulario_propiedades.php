@@ -5,7 +5,7 @@
                 <input 
                     type="text" 
                     id="titulo" 
-                    name="titulo" 
+                    name="propiedad[titulo]" 
                     placeholder="Titulo propiedad" 
                     value="<?php echo cleanHTML($propiedad->titulo);?>"
                 >
@@ -14,13 +14,13 @@
                 <input 
                     type="number" 
                     id="precio" 
-                    name="precio" 
+                    name="propiedad[precio]" 
                     placeholder="Precio propiedad" 
                     value="<?php echo cleanHTML($propiedad->precio);?>"
                 >
 
                 <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
+                <input type="file" id="imagen" name="propiedad[imagen]" accept="image/jpeg, image/png">
 
                 <label for="descripcion">Descripción:</label>
                 <?php if($propiedad->imagen): ?>
@@ -28,7 +28,7 @@
                         <img src="/S26-BienesRaices/imagenes/<?php echo $propiedad->imagen; ?>">
                     </div>
                 <?php endif; ?>
-                <textarea id="descripcion" name="descripcion"><?php echo cleanHTML($propiedad->descripcion);?></textarea>
+                <textarea id="descripcion" name="propiedad[descripcion]"><?php echo cleanHTML($propiedad->descripcion);?></textarea>
             </fieldset>
 
             <fieldset>
@@ -40,7 +40,7 @@
                 <input 
                     type="number" 
                     id="habitaciones" 
-                    name="habitaciones" 
+                    name="propiedad[habitaciones]" 
                     placeholder="Ej: 3" 
                     min="1" max="9" 
                     value="<?php echo cleanHTML($propiedad->habitaciones);?>"
@@ -49,7 +49,7 @@
                 <label for="wc">Baños:</label>
                 <input type="number" 
                     id="wc" 
-                    name="wc" 
+                    name="propiedad[wc]" 
                     placeholder="Ej: 3" 
                     min="1" 
                     max="9" 
@@ -60,7 +60,7 @@
                 <input 
                     type="number" 
                     id="estacionamiento" 
-                    name="estacionamiento" 
+                    name="propiedad[estacionamiento]" 
                     placeholder="Ej: 3" 
                     min="1" 
                     max="9" 
@@ -70,7 +70,7 @@
 
             <fieldset><!-- Codigo a cambiar para el vendedor...-->
                 <legend>Vendedor</legend>
-                <select name="vendedorId">
+                <select name="propiedad[vendedorId]">
                     <option value="">-- Seleccione --</option>
                     <?php while($vendedor = mysqli_fetch_assoc($resultado)): ?>
                         <option 
