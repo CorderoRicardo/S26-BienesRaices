@@ -20,47 +20,15 @@ $consulta = "SELECT * FROM vendedores;";
 $resultado = mysqli_query($db, $consulta);
 
 // arreglo con errores para el formulario
-$errores = [];
+$errores = Propiedad::getErrores();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $args = $_POST['propiedad'];
     
     $propiedad->sincronizar($args);
 
-    $imagen = $_FILES['imagen'];
+    $errores = $propiedad->validar();
 
-    if(!$titulo){
-        $errores[] = 'El Titulo es obligatorio';
-    }
-
-    if(!$precio){
-        $errores[] = 'El Precio es obligatorio';
-    }    
-    if(strlen($descripcion) < 50){
-        $errores[] = 'La Descripción es obligatoria y debe tener al menos 50 caracteres';
-    }    
-    if(!$habitaciones){
-        $errores[] = 'El número de Habitaciones es obligatorio';
-    }
-    if(!$wc){
-        $errores[] = 'El número de Baños es obligatorio';
-    }
-    if(!$estacionamiento){
-        $errores[] = 'El número de lugares de Estacionamiento es obligatorio';
-    }
-    if(!$vendedorId){
-        $errores[] = 'Elige un vendedor';
-    }
-
-    // Validar por tamaño - 1MB máx
-    $medida = 1000*1000;
-    if($imagen['size'] > $medida){
-        $errores[] = 'El Peso máximo de la imagen es 1MB';
-    }
-    // echo "<pre>";
-    // var_dump($errores);
-    // echo "</pre>";
-    
     if(empty($errores)){
     /*subida de archivos*/
         $carpetaImagenes = '../../imagenes/';
