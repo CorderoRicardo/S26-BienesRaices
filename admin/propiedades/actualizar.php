@@ -3,6 +3,7 @@ require '../../includes/app.php';
 autenticacion();
 
 use App\Propiedad;
+use Intervention\Image\ImageManagerStatic as Image;
 
 //Validad la URL por ID
 $id = $_GET['id'];
@@ -29,29 +30,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $errores = $propiedad->validar();
 
+    // Subida de archivos
+    // generar nombre único para la imagen
+    $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+
+    if($_FILES['propiedad']['tmp_name']['imagen']){
+        $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800,600);
+        $propiedad->setImage($nombreImagen);
+    }    
+
     if(empty($errores)){
-    /*subida de archivos*/
-        $carpetaImagenes = '../../imagenes/';
-        //Crear carpeta si no existe previamente
-        if(!is_dir($carpetaImagenes)){
-            mkdir($carpetaImagenes);
-        }
+    
 
-        $nombreImagen = '';
-
-        // Eliminar imagen previa
-        if($imagen['name']){
-            unlink($carpetaImagenes . $propiedad['imagen']);
-
-            // generar nombre único para la imagen
-            $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
-
-            //Subir la imagen
-            move_uploaded_file($imagen['tmp_name'],$carpetaImagenes . $nombreImagen);            
-        } else{
-            $nombreImagen = $propiedad['imagen'];
-        }
-        
+    exit;
     // Crear la query del INSERT
         $query = "UPDATE propiedades SET titulo = '$titulo', precio = $precio, imagen = '$nombreImagen', descripcion = '$descripcion', habitaciones = $habitaciones, wc = $wc, estacionamiento = $estacionamiento, vendedores_id = $vendedorId WHERE id = $id";
 
