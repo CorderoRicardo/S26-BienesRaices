@@ -34,28 +34,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // generar nombre único para la imagen
     $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
 
-    if($_FILES['propiedad']['tmp_name']['imagen']){
-        $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800,600);
-        $propiedad->setImage($nombreImagen);
-    }    
-
     if(empty($errores)){
-    
-
-    exit;
-    // Crear la query del INSERT
-        $query = "UPDATE propiedades SET titulo = '$titulo', precio = $precio, imagen = '$nombreImagen', descripcion = '$descripcion', habitaciones = $habitaciones, wc = $wc, estacionamiento = $estacionamiento, vendedores_id = $vendedorId WHERE id = $id";
-
     // Insertar la query en la base de datos
-        $resultadoInsert = mysqli_query($db, $query);
-
-        if($resultadoInsert){
-            // 
-            header('Location: /S26-BienesRaices/admin/index.php?resultado=2');
-        }
-
+        if($_FILES['propiedad']['tmp_name']['imagen']){
+            $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800,600);
+            $propiedad->setImage($nombreImagen);
+            $image->save(CARPETA_IMAGENES . $nombreImagen);    
+       }    
+       $propiedad->guardar();
     }
-
 }
 
 incluirTemplate('header');

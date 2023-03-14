@@ -44,11 +44,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $image->save(CARPETA_IMAGENES . $nombreImagen);
 
         //Guarda en la BD
-        $resultadoInsert = $propiedad->guardar();
-        if($resultadoInsert){
-            // 
-            header('Location: /S26-BienesRaices/admin/index.php?resultado=1');
-        }
+        $propiedad->guardar();
     }  
 }
 
