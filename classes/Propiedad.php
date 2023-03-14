@@ -81,6 +81,17 @@ class Propiedad{
         }
     }
 
+    /** Deletes a row of the table 'propiedades' */
+    public function eliminar(){
+        $query = "DELETE FROM propiedades WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $resultado = self::$db->query($query);
+
+        if($resultado){
+            $this->borrarImagen();
+            header('location: /S26-BienesRaices/admin/index.php?resultado=3');
+        }
+    }
+
     /**
      * Set up the connection to a MySQL DB 
      */
@@ -115,13 +126,17 @@ class Propiedad{
     public function setImage($imagen){
         // Elimina la imagen previa, si la hay
         if(isset($this->id)){
-            $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
-            if($existeArchivo){
-                unlink(CARPETA_IMAGENES . $this->imagen);
-            }
+            $this->borrarImagen();
         }
         if($imagen){
             $this->imagen = $imagen;
+        }
+    }
+
+    public function borrarImagen(){
+        $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
+        if($existeArchivo){
+            unlink(CARPETA_IMAGENES . $this->imagen);
         }
     }
 
