@@ -23,7 +23,7 @@ class Propiedad{
 
     public function __construct($args = [])
     {
-        $this->id = $args['id'] ?? '';
+        $this->id = $args['id'] ?? null;
         $this->titulo = $args['titulo'] ?? '';
         $this->precio = $args['precio'] ?? '';
         $this->imagen = $args['imagen'] ?? '';
@@ -36,6 +36,14 @@ class Propiedad{
     }
 
     public function guardar(){
+        if(isset($this->id)){
+            $this->actualizar();
+        }else{
+            $this->crear();
+        }
+    }
+
+    public function crear(){
         $atributos = $this->sanitizarAtributos();
 
         // Crear la query del INSERT
@@ -48,7 +56,29 @@ class Propiedad{
         
         $resultado = self::$db->query($query);
 
-        return $resultado;
+        if($resultado){
+            header('Location: /S26-BienesRaices/admin/index.php?resultado=1');
+        }
+    }
+
+    public function actualizar(){
+        $atributos = $this->sanitizarAtributos();
+
+        $valores = [];
+        foreach($atributos as $key => $value){
+            $valores[] = "$key='$value'";
+        }
+
+        $query = "UPDATE propiedades SET ";
+        $query .= join(', ', $valores );
+        $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+        $query .= " LIMIT 1 ";
+        
+        $resultado = self::$db->query($query);
+
+        if($resultado){
+            header('Location: /S26-BienesRaices/admin/index.php?resultado=2');
+        }
     }
 
     /**
@@ -84,7 +114,7 @@ class Propiedad{
 
     public function setImage($imagen){
         // Elimina la imagen previa, si la hay
-        if($this->id){
+        if(isset($this->id)){
             $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
             if($existeArchivo){
                 unlink(CARPETA_IMAGENES . $this->imagen);
