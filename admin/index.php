@@ -18,20 +18,9 @@
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
         if($id){
-            //Eliminar la imagen
-            $query = "SELECT imagen FROM propiedades WHERE id = $id";
-            $resQuery = mysqli_query($db,$query);
-            $prop = mysqli_fetch_assoc($resQuery);
+            $propiedad = Propiedad::find($id);
 
-            unlink('../imagenes/' . $prop['imagen']);
-
-            //Eliminar propiedad
-            $query = "DELETE FROM propiedades WHERE id = $id";
-            $resQuery = mysqli_query($db, $query);
-
-            if($resQuery){
-                header('location: /S26-BienesRaices/admin/index.php?resultado=3');
-            }
+            $propiedad->eliminar();
         }
     }
 ?>
