@@ -37,7 +37,9 @@ table.propiedades {
         width: 10rem;
     }
     .tdImage {
-        display: inline-block;
+        display: grid;
+        justify-content: space-around;
+        padding-top: 3.5rem;
     }
 }
 .imagen-small {
