@@ -5,6 +5,7 @@ class ActiveRecord{
     protected static $db;
     protected static $columnasDB = ['id','titulo','precio','imagen','descripcion','habitaciones','wc','estacionamiento','creado','vendedorId'];
     protected static $errores = [];
+    protected static $tabla = '';
 
     public $id;
     public $titulo;
@@ -43,7 +44,7 @@ class ActiveRecord{
         $atributos = $this->sanitizarAtributos();
 
         // Crear la query del INSERT
-        $query = "INSERT INTO propiedades ( ";
+        $query = "INSERT INTO ".static::$tabla." ( ";
         $query .= join(', ',array_keys($atributos));
         $query .= " ) VALUES (' ";
         $query .= join("', '", array_values($atributos));
@@ -65,7 +66,7 @@ class ActiveRecord{
             $valores[] = "$key='$value'";
         }
 
-        $query = "UPDATE propiedades SET ";
+        $query = "UPDATE ".static::$tabla." SET ";
         $query .= join(', ', $valores );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 ";
@@ -79,7 +80,7 @@ class ActiveRecord{
 
     /** Deletes a row of the table 'propiedades' */
     public function eliminar(){
-        $query = "DELETE FROM propiedades WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $query = "DELETE FROM ".static::$tabla." WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
         $resultado = self::$db->query($query);
 
         if($resultado){
@@ -173,14 +174,14 @@ class ActiveRecord{
 
     /** Returns all rows of the table 'propiedades' */
     public static function all(){
-        $query = "SELECT * FROM propiedades";
+        $query = "SELECT * FROM ".static::$tabla." ";
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
 
     /** Search a row in 'propiedades' table by the ID and returns it */
     public static function find($id){
-        $query = "SELECT * FROM propiedades WHERE id = $id";
+        $query = "SELECT * FROM ".static::$tabla." WHERE id = $id";
         $resultado = self::consultarSQL($query);
         return array_shift($resultado);
     }
