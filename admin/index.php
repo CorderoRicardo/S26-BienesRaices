@@ -36,6 +36,8 @@
 
         <main class="contenedor">
             <h1>Administrador de Bienes Raices</h1>
+            <a href="/S26-BienesRaices/admin/propiedades/crear.php" class="boton boton-verde-inline">Nueva propiedad</a>
+            <a href="/S26-BienesRaices/admin/vendedores/crear.php" class="boton boton-amarillo-inline">Nuevo vendedor</a>
             <h2>Propiedades</h2>
             <?php if(intval($resultado) === 1): ?>
                 <p class="alerta exito">
@@ -50,8 +52,8 @@
                     Anuncio eliminado correctamente
                 </p>                  
             <?php endif; ?>
-            <a href="/S26-BienesRaices/admin/propiedades/crear.php" class="boton boton-verde-inline">Nueva propiedad</a>
-                <table class="propiedades">
+            
+            <table class="propiedades">
                     <thead>
                         <th>ID</th>
                         <th>Titulo</th>
@@ -81,7 +83,6 @@
                 </table>
 
                 <h2>Vendedores</h2>
-            <a href="#" class="boton boton-verde-inline">Nuevo vendedor</a>
                 <table class="propiedades">
                     <thead>
                         <th>ID</th>
