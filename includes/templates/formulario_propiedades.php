@@ -70,15 +70,15 @@
 
             <fieldset><!-- Codigo a cambiar para el vendedor...-->
                 <legend>Vendedor</legend>
-                <select name="propiedad[vendedorId]">
+                <select name="propiedad[vendedorId]" id="vendedor">
                     <option value="">-- Seleccione --</option>
-                    <?php while($vendedor = mysqli_fetch_assoc($resultado)): ?>
+                    <?php foreach($vendedores as $vendedor): ?>
                         <option 
-                            value="<?php echo cleanHTML($vendedor['id']) ?>"
-                            <?php echo ($vendedor['id'] === $vendedorId) ? 'selected': '' ?>    
+                            <?php echo $propiedad->vendedorId === $vendedor->id ? 'selected' :''?>
+                            value="<?php echo cleanHTML($vendedor->id); ?>"    
                         >
-                            <?php echo $vendedor['nombre'] . ' ' . $vendedor['apellido']?>
+                             <?php echo cleanHTML($vendedor->nombre)." ".cleanHTML($vendedor->apellido); ?>
                         </option>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </select>
             </fieldset>

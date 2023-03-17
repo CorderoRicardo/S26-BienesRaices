@@ -2,15 +2,13 @@
 require '../../includes/app.php';
 
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\ImageManagerStatic as Image;
 
 autenticacion();
 
-$db = conectarDB();
-
-//consultar valores de la BD: datos de vendedores
-$consulta = "SELECT * FROM vendedores;";
-$resultado = mysqli_query($db, $consulta);
+//Obtener todos los vendedores
+$vendedores = Vendedor::all();
 
 // arreglo con errores para el formulario
 $errores = Propiedad::getErrores();
