@@ -3,9 +3,11 @@
     autenticacion();
 
     use App\Propiedad;
+    use App\Vendedor;
 
     // implementar un metodo para obtener todas las propiedades
     $propiedades = Propiedad::all();
+    $vendedores = Vendedor::all();
 
     //Incluye un template
     incluirTemplate('header');
@@ -27,6 +29,7 @@
 
         <main class="contenedor">
             <h1>Administrador de Bienes Raices</h1>
+            <h2>Propiedades</h2>
             <?php if(intval($resultado) === 1): ?>
                 <p class="alerta exito">
                     Anuncio creado correctamente
@@ -68,11 +71,36 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
+                <h2>Vendedores</h2>
+            <a href="#" class="boton boton-verde-inline">Nuevo vendedor</a>
+                <table class="propiedades">
+                    <thead>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </thead>
+
+                    <tbody><!--Mostrar los resultados-->
+                        <?php foreach($vendedores as $vendedor): ?>
+                        <tr>
+                            <td> <?php echo $vendedor->id; ?></td>
+                            <td> <?php echo $vendedor->nombre . " " . $vendedor->apellido; ?></td>
+                            <td> <?php echo $vendedor->telefono; ?> </td>
+                            <td>
+                                <form method="POST" class="w-100">
+                                    <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
+                                    <input type="submit" class="boton-rojo" value="Eliminar">
+                                </form>
+                                <a href="vendedores/actualizar.php?id=<?php echo $vendedor->id ?>" class="boton-amarillo">Actualizar</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>                
         </main>
 
 <?php
-    //Cerrar la conexion a la DB
-    mysqli_close($db);
-
     incluirTemplate('footer');
 ?>
