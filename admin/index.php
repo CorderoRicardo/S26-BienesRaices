@@ -20,9 +20,16 @@
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
         if($id){
-            $propiedad = Propiedad::find($id);
-
-            $propiedad->eliminar();
+            $tipo = $_POST['tipo'];
+            if(validarTipoContenido($tipo)){
+                if($tipo === "propiedad"){
+                    $propiedad = Propiedad::find($id);
+                    $propiedad->eliminar();
+                }else if($tipo === "vendedor"){
+                    $vendedor = Vendedor::find($id);
+                    $vendedor->eliminar();
+                }
+            }
         }
     }
 ?>
@@ -63,6 +70,7 @@
                             <td>
                                 <form method="POST" class="w-100">
                                     <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
+                                    <input type="hidden" name="tipo" value="propiedad">
                                     <input type="submit" class="boton-rojo" value="Eliminar">
                                 </form>
                                 <a href="propiedades/actualizar.php?id=<?php echo $propiedad->id ?>" class="boton-amarillo">Actualizar</a>
@@ -71,7 +79,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                
+
                 <h2>Vendedores</h2>
             <a href="#" class="boton boton-verde-inline">Nuevo vendedor</a>
                 <table class="propiedades">
@@ -91,6 +99,7 @@
                             <td>
                                 <form method="POST" class="w-100">
                                     <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
+                                    <input type="hidden" name="tipo" value="vendedor">
                                     <input type="submit" class="boton-rojo" value="Eliminar">
                                 </form>
                                 <a href="vendedores/actualizar.php?id=<?php echo $vendedor->id ?>" class="boton-amarillo">Actualizar</a>
