@@ -41,18 +41,18 @@
             <h2>Propiedades</h2>
             <?php if(intval($resultado) === 1): ?>
                 <p class="alerta exito">
-                    Anuncio creado correctamente
+                    Creado correctamente
                 </p>
             <?php elseif(intval($resultado)=== 2): ?>
                 <p class="alerta exito">
-                    Anuncio actualizado correctamente
+                    Actualizado correctamente
                 </p>    
             <?php elseif(intval($resultado)=== 3): ?>
                 <p class="alerta exito">
-                    Anuncio eliminado correctamente
+                    Eliminado correctamente
                 </p>                  
             <?php endif; ?>
-            
+
             <table class="propiedades">
                     <thead>
                         <th>ID</th>
