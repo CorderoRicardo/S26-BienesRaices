@@ -29,3 +29,9 @@ function cleanHTML($html): string{
     $s = htmlspecialchars($html);
     return $s;
 }
+
+/**Validates the type of content */
+function validarTipoContenido($tipo){
+    $tipos = ["propiedad","vendedor"];
+    return in_array($tipo,$tipos);
+}
