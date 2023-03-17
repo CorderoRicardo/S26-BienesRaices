@@ -3,7 +3,10 @@ require '../../includes/app.php';
 autenticacion();
 
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\ImageManagerStatic as Image;
+
+$vendedores = Vendedor::all();
 
 //Validad la URL por ID
 $id = $_GET['id'];
@@ -15,10 +18,6 @@ if(!$id){
 
 //Consultar propiedad
 $propiedad = Propiedad::find($id);
-
-//consultar valores de la BD: datos de vendedores
-$consulta = "SELECT * FROM vendedores;";
-$resultado = mysqli_query($db, $consulta);
 
 // arreglo con errores para el formulario
 $errores = Propiedad::getErrores();
