@@ -1,15 +1,12 @@
 <?php 
-$db = conectarDB();
+use App\Propiedad;
 
-//consultar
-$query = "SELECT * FROM propiedades LIMIT $limite;";
+$propiedades = Propiedad::all();
 
-//obtener resultados
-$resultado = mysqli_query($db,$query);
 ?>
 
     <div class="contenedor-anuncios">
-        <?php while($propiedad = mysqli_fetch_assoc($resultado)): ?>
+        <?php foreach($propiedades as $propiedad): ?>
         <div class="anuncio">
             <!-- <picture>
                 <source
@@ -28,15 +25,15 @@ $resultado = mysqli_query($db,$query);
             </picture> -->
                 <img 
                     loading="lazy"
-                    src="imagenes/<?php echo $propiedad['imagen'] ?>"
+                    src="imagenes/<?php echo $propiedad->imagen; ?>"
                     alt="anuncio"
                 />
             <div class="contenido-anuncio">
-                <h3><?php echo $propiedad['titulo']; ?></h3>
+                <h3><?php echo $propiedad->titulo; ?></h3>
                 <p>
-                    <?php echo $propiedad['descripcion']; ?>
+                    <?php echo $propiedad->descripcion; ?>
                 </p>
-                <p class="precio">$<?php echo number_format($propiedad['precio']); ?></p>
+                <p class="precio">$<?php echo number_format($propiedad->precio); ?></p>
                 <ul class="iconos-caracteristicas">
                     <li>
                         <img
@@ -45,7 +42,7 @@ $resultado = mysqli_query($db,$query);
                             src="build/img/icono_wc.svg"
                             alt="icono wc"
                         />
-                        <p><?php echo $propiedad['wc']; ?></p>
+                        <p><?php echo $propiedad->wc; ?></p>
                     </li>
                     <li>
                         <img
@@ -54,7 +51,7 @@ $resultado = mysqli_query($db,$query);
                             src="build/img/icono_dormitorio.svg"
                             alt="icono dormitorio"
                         />
-                        <p><?php echo $propiedad['habitaciones']; ?></p>
+                        <p><?php echo $propiedad->habitaciones; ?></p>
                     </li>
                     <li>
                         <img
@@ -63,20 +60,19 @@ $resultado = mysqli_query($db,$query);
                             src="build/img/icono_estacionamiento.svg"
                             alt="icono estacionamiento"
                         />
-                        <p><?php echo $propiedad['estacionamiento']; ?></p>
+                        <p><?php echo $propiedad->estacionamiento; ?></p>
                     </li>
                 </ul>
 
-                <a href="anuncio.php?id=<?php echo $propiedad['id']; ?>" class="boton boton-amarillo">
+                <a href="anuncio.php?id=<?php echo $propiedad->id; ?>" class="boton boton-amarillo">
                     Ver propiedad
                 </a>
             </div>
         </div>
         <!--Fin .anuncio-->
-    <?php endwhile; ?>
+    <?php endforeach; ?>
     </div>
 
 <?php 
-//Cerrar la conexion a la BD
-mysqli_close($db);
+
 ?>
