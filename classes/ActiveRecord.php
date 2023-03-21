@@ -131,6 +131,13 @@ class ActiveRecord{
         return $resultado;
     }
 
+    /** Returns the especific number of rows of the respective table */
+    public static function getRows($cantidad){
+        $query = "SELECT * FROM ".static::$tabla . " LIMIT $cantidad";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }    
+
     /** Search a row in 'propiedades' table by the ID and returns it */
     public static function find($id){
         $query = "SELECT * FROM ".static::$tabla." WHERE id = $id";

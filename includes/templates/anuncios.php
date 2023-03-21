@@ -1,7 +1,11 @@
 <?php 
 use App\Propiedad;
 
-$propiedades = Propiedad::all();
+if($_SERVER['SCRIPT_NAME'] === '/S26-BienesRaices/anuncios.php'){
+    $propiedades = Propiedad::all();
+}else{
+    $propiedades = Propiedad::getRows(3);
+}
 
 ?>
 
